@@ -12,25 +12,28 @@ ifneq ("$(wildcard $(ENV_FILE))", "")
 endif
 
 help: ##   shows all available targets
-	echo ""
-	echo "${DOCKER_NAME}"
-	echo ""
-	fgrep -h "##" $(MAKEFILE_LIST) | fgrep -v fgrep | sed -e 's/\\$$//' | sed -e 's/\(.*\)\:.*##/\1:/'
-	echo ""
+	@echo ""
+	@echo "Drone v0.8"
+	@echo ""
+	@fgrep -h "##" $(MAKEFILE_LIST) | fgrep -v fgrep | sed -e 's/\\$$//' | sed -e 's/\(.*\)\:.*##/\1:/'
+	@echo ""
 
 build: ##  builds container image
+	@sudo rm -rf ./data/
+	@mkdir -p ./data/
 	docker-compose build
 
 start: ##  start container
 	docker-compose up -d
 
 test: ##   run all tests
-	echo "Checking localhost:80"
-	tests/test_url.sh http://localhost:80
-	echo "Checking https://localhost"
-	tests/test_url.sh https://localhost
-	echo "Checking localhost:9000"
-	tests/test_url.sh http://localhost:9000
+	@echo "Checking port 80"
+	@nc -z localhost 80
+	@echo "Checking port 443"
+	@nc -z localhost 443
+	@echo "Checking port 9000"
+	@nc -z localhost 9000
+	@echo -e "\n All tests passed!\n"
 
 stop: ##   stops and removes container
 	docker-compose down

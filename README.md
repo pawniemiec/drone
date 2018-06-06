@@ -18,6 +18,36 @@ Check this out: https://docs.docker.com/install/
 
 And: https://docs.docker.com/compose/install/
 
+## Before you build
+
+### Requirements
+Requirements can be found [here](./requirements.txt)
+
+#### Domain name
+You need to get publicly resolvable domain name.
+There is loads of domain sellers out there so choose your own.
+
+I created `drone` subdomain, so my drone domain looks like:
+```
+drone.blackfrog.io
+```
+
+#### Certificate
+Before building drone server you need to obtain your own certificate.
+I have used Let's encrypt. I have followed these steps:
+- Downloaded [certbot-auto](https://certbot.eff.org/docs/install.html)
+- run: 
+```
+./certbot-auto --server https://acme-v02.api.letsencrypt.org/directory -d drone.blackfrog.io --manual --preferred-challenges dns-01 certonly
+```
+This ^^ command asked several questions - if you run it from server drone will be running on, default answers are fine.
+Please note: you need to be able to update your DNS with `_acme-challenge.drone.blackfrog.io` TXT record with the value `certbot-auto` gives you.
+This step creates bunch of cert and keys in `/etc/letsencrypt/archive/drone.blackfrog.io` directory
+- then I put the `chain.pem` and `privkey.pem` in ./certs/ directory
+
+#### Drone Authentication
+Drone uses 3rd party authentication mechanism called OAuth2.
+It makes sense to use your Version Control OAuth2, as it will save you a step of integration your repo with drone.
 
 ## Configuration
 
@@ -26,7 +56,7 @@ You need to set the following variables:
 export DRONE_GITHUB_CLIENT=yellowfrog
 export DRONE_GITHUB_SECRET=I_hate_storks!
 export DRONE_SECRET=Not_true_I_love_storks!!!
-export DRONE_HOST=https://drone.yellowfrog.ioioio
+export DRONE_HOST=https://drone.blackfrog.io
 ```
 
 ### Building, starting and testing
@@ -41,7 +71,6 @@ These commands will download this repo, will build the docker images for `drone-
 ```
 make test
 ```
-
 
 ## Contributing
 
