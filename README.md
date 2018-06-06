@@ -43,7 +43,7 @@ I have used Let's encrypt. I have followed these steps:
 This ^^ command asked several questions - if you run it from server drone will be running on, default answers are fine.
 Please note: you need to be able to update your DNS with `_acme-challenge.drone.blackfrog.io` TXT record with the value `certbot-auto` gives you.
 This step creates bunch of cert and keys in `/etc/letsencrypt/archive/drone.blackfrog.io` directory
-- then I put the `chain.pem` and `privkey.pem` in ./certs/ directory
+- then I put the `fullchain.pem` and `privkey.pem` in ./certs/ directory
 
 #### Drone Authentication
 Drone uses 3rd party authentication mechanism called OAuth2.

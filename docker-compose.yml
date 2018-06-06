@@ -10,7 +10,7 @@ services:
     restart: always
     volumes:
       - ./data:/var/lib/drone/
-      - ./certs/cert.pem:/etc/certs/drone.noledge.tech/cert.pem
+      - ./certs/fullchain.pem:/etc/certs/drone.noledge.tech/fullchain.pem
       - ./certs/privkey.pem:/etc/certs/drone.noledge.tech/privkey.pem
     environment:
       - DRONE_OPEN=true
@@ -19,7 +19,7 @@ services:
       - DRONE_GITHUB_CLIENT=${DRONE_GITHUB_CLIENT}
       - DRONE_GITHUB_SECRET=${DRONE_GITHUB_SECRET}
       - DRONE_SECRET=${DRONE_SECRET}
-      - DRONE_SERVER_CERT=/etc/certs/drone.noledge.tech/cert.pem
+      - DRONE_SERVER_CERT=/etc/certs/drone.noledge.tech/fullchain.pem
       - DRONE_SERVER_KEY=/etc/certs/drone.noledge.tech/privkey.pem
 
   drone-agent:
